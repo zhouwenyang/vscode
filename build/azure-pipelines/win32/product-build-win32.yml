@@ -238,6 +238,18 @@ steps:
     .\build\azure-pipelines\win32\import-esrp-auth-cert.ps1 -AuthCertificateBase64 $(esrp-auth-certificate) -AuthCertificateKey $(esrp-auth-certificate-key)
   displayName: Import ESRP Auth Certificate
 
+  - powershell: |
+    . build/azure-pipelines/win32/exec.ps1
+    $ErrorActionPreference = "Stop"
+    $env:AZURE_STORAGE_ACCESS_KEY_2 = "$(vscode-storage-key)"
+    $env:AZURE_DOCUMENTDB_MASTERKEY = "$(builds-docdb-key-readwrite)"
+    $env:VSCODE_MIXIN_PASSWORD="$(github-distro-mixin-password)"
+    .\build\azure-pipelines\win32\package-and-sign.ps1
+  displayName: Package and Sign
+
+- task: securedevelopmentteam.vss-secure-development-tools.build-task-codesignvalidation.CodeSign@1
+  displayName: Code Sign Validation
+
 - powershell: |
     . build/azure-pipelines/win32/exec.ps1
     $ErrorActionPreference = "Stop"
