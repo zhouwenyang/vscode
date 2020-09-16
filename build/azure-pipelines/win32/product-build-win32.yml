@@ -238,7 +238,7 @@ steps:
     .\build\azure-pipelines\win32\import-esrp-auth-cert.ps1 -AuthCertificateBase64 $(esrp-auth-certificate) -AuthCertificateKey $(esrp-auth-certificate-key)
   displayName: Import ESRP Auth Certificate
 
-  - powershell: |
+- powershell: |
     . build/azure-pipelines/win32/exec.ps1
     $ErrorActionPreference = "Stop"
     $env:AZURE_STORAGE_ACCESS_KEY_2 = "$(vscode-storage-key)"
