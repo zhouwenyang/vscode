@@ -212,6 +212,7 @@ export interface RemoteSourceProvider {
 	readonly icon?: string; // codicon name
 	readonly supportsQuery?: boolean;
 	getRemoteSources(query?: string): ProviderResult<RemoteSource[]>;
+	getBranches?(remoteSource: RemoteSource): ProviderResult<string[]>;
 	publishRepository?(repository: Repository): Promise<void>;
 }
 

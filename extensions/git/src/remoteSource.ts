@@ -80,9 +80,15 @@ class RemoteSourceProviderQuickPick {
 export interface PickRemoteSourceOptions {
 	readonly providerLabel?: (provider: RemoteSourceProvider) => string;
 	readonly urlLabel?: string;
+	readonly branch?: boolean; // then result is PickRemoteSourceResult
 }
 
-export async function pickRemoteSource(model: Model, options: PickRemoteSourceOptions = {}): Promise<string | undefined> {
+export interface PickRemoteSourceResult {
+	readonly url: string;
+	readonly branch: string;
+}
+
+export async function pickRemoteSource(model: Model, options: PickRemoteSourceOptions = {}): Promise<string | PickRemoteSourceResult | undefined> {
 	const quickpick = window.createQuickPick<(QuickPickItem & { provider?: RemoteSourceProvider, url?: string })>();
 	quickpick.ignoreFocusOut = true;
 
